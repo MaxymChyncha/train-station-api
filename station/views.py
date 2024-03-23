@@ -1,7 +1,8 @@
 from rest_framework import mixins, viewsets
 
-from station.models import Crew, TrainType, Train, Station
+from station.models import Crew, TrainType, Train, Station, Route
 from station.serializers.crew_serializers import CrewSerializer
+from station.serializers.route_serializers import RouteSerializer
 from station.serializers.station_serializers import StationSerializer
 from station.serializers.train_serializers import TrainSerializer
 from station.serializers.train_type_serializers import TrainTypeSerializer
@@ -44,3 +45,13 @@ class StationViewSet(
 ):
     queryset = Station.objects.all()
     serializer_class = StationSerializer
+
+
+class RouteViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet
+):
+    queryset = Route.objects.all()
+    serializer_class = RouteSerializer
