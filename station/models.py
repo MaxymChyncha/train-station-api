@@ -64,6 +64,10 @@ class Route(models.Model):
     )
     distance = models.PositiveIntegerField()
 
+    class Meta:
+        unique_together = ("source", "destination")
+        ordering = ["source"]
+
     def __str__(self) -> str:
         return f"{self.source.name} - {self.destination.name}"
 
@@ -81,6 +85,10 @@ class Trip(models.Model):
     )
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
+    crew = models.ManyToManyField(
+        to=Crew,
+        related_name="trips"
+    )
 
     def __str__(self) -> str:
         return f"Route: {self.route}. Train: {self.train.name}"
