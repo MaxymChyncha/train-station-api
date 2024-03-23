@@ -1,7 +1,8 @@
 from rest_framework import mixins, viewsets
 
-from station.models import Crew, TrainType, Train, Station, Route, Trip
+from station.models import Crew, TrainType, Train, Station, Route, Trip, Order
 from station.serializers.crew_serializers import CrewSerializer
+from station.serializers.order_serializers import OrderSerializer
 from station.serializers.route_serializers import RouteSerializer
 from station.serializers.station_serializers import StationSerializer
 from station.serializers.train_serializers import TrainSerializer
@@ -61,3 +62,15 @@ class RouteViewSet(
 class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.all()
     serializer_class = TripSerializer
+
+
+class OrderViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    viewsets.GenericViewSet
+):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
