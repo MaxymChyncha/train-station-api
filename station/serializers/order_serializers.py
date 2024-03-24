@@ -2,7 +2,10 @@ from django.db import transaction
 from rest_framework import serializers
 
 from station.models import Order, Ticket
-from station.serializers.ticket_serializers import TicketSerializer
+from station.serializers.ticket_serializers import (
+    TicketSerializer,
+    TicketListSerializer
+)
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -19,3 +22,7 @@ class OrderSerializer(serializers.ModelSerializer):
             for ticket_data in tickets_data:
                 Ticket.objects.create(order=order, **ticket_data)
             return order
+
+
+class OrderListSerializer(OrderSerializer):
+    tickets = TicketListSerializer(many=True, read_only=True)

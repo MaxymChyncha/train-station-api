@@ -68,3 +68,17 @@ class TripDetailSerializer(TripSerializer):
 
     class Meta(TripSerializer.Meta):
         fields = TripSerializer.Meta.fields + ("taken_tickets",)
+
+
+class TripOrderSerializer(serializers.ModelSerializer):
+    route = serializers.StringRelatedField(read_only=True)
+    train_name = serializers.CharField(source="train.name", read_only=True)
+
+    class Meta:
+        model = Trip
+        fields = (
+            "route",
+            "departure_time",
+            "arrival_time",
+            "train_name"
+        )
