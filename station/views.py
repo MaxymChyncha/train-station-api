@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from django.db.models import F, Count
 from rest_framework import mixins, viewsets
 
 from station.models import Crew, TrainType, Train, Station, Route, Trip, Order
@@ -11,7 +14,11 @@ from station.serializers.route_serializers import (
 from station.serializers.station_serializers import StationSerializer
 from station.serializers.train_serializers import TrainSerializer
 from station.serializers.train_type_serializers import TrainTypeSerializer
-from station.serializers.trip_serializers import TripSerializer
+from station.serializers.trip_serializers import (
+    TripSerializer,
+    TripListSerializer,
+    TripDetailSerializer
+)
 
 
 class CrewViewSet(
@@ -90,6 +97,73 @@ class RouteViewSet(
 class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.all()
     serializer_class = TripSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        if self.action == "list":
+            current_time = datetime.now()
+            queryset = (
+                queryset
+                .select_related(
+                    "route__source",
+                    "route__destination",
+                    "train"
+                )
+                .filter(departure_time__gt=current_time)
+                .annotate(
+                    tickets_available=(
+                        F("train__cargo_num")
+                        * F("train__places_in_cargo")
+                        - Count("tickets")
+                    )
+                )
+            )
+
+            if from_station := self.request.query_params.get("from"):
+                queryset = queryset.filter(
+                    route__source__name__icontains=from_station
+                )
+
+            if to_station := self.request.query_params.get("to"):
+                queryset = queryset.filter(
+                    route__destination__name__icontains=to_station
+                )
+
+            if departure := self.request.query_params.get("departure_date"):
+                departure_date = datetime.strptime(departure, "%Y-%m-%d")
+                queryset = queryset.filter(
+                    departure_time__date=departure_date
+                )
+
+            if arrival := self.request.query_params.get("arrival_date"):
+                arrival_date = datetime.strptime(arrival, "%Y-%m-%d")
+                queryset = queryset.filter(
+                    arrival_time__date=arrival_date
+                )
+
+        if self.action == "retrieve":
+            queryset = (
+                queryset
+                .select_related(
+                    "train__train_type",
+                    "route__source",
+                    "route__destination"
+                )
+                .prefetch_related("crew")
+            )
+
+        return queryset.distinct()
+
+    def get_serializer_class(self):
+
+        if self.action == "list":
+            return TripListSerializer
+
+        if self.action == "retrieve":
+            return TripDetailSerializer
+
+        return TripSerializer
 
 
 class OrderViewSet(
