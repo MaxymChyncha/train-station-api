@@ -3,7 +3,11 @@ from rest_framework import mixins, viewsets
 from station.models import Crew, TrainType, Train, Station, Route, Trip, Order
 from station.serializers.crew_serializers import CrewSerializer
 from station.serializers.order_serializers import OrderSerializer
-from station.serializers.route_serializers import RouteSerializer
+from station.serializers.route_serializers import (
+    RouteSerializer,
+    RouteListSerializer,
+    RouteDetailSerializer
+)
 from station.serializers.station_serializers import StationSerializer
 from station.serializers.train_serializers import TrainSerializer
 from station.serializers.train_type_serializers import TrainTypeSerializer
@@ -55,8 +59,32 @@ class RouteViewSet(
     mixins.RetrieveModelMixin,
     viewsets.GenericViewSet
 ):
-    queryset = Route.objects.all()
+    queryset = Route.objects.select_related("source", "destination")
     serializer_class = RouteSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+
+        if self.action == "list":
+            if source := self.request.query_params.get("source"):
+                queryset = queryset.filter(source__name__icontains=source)
+
+            if destination := self.request.query_params.get("destination"):
+                queryset = queryset.filter(
+                    destination__name__icontains=destination
+                )
+
+        return queryset.distinct()
+
+    def get_serializer_class(self):
+
+        if self.action == "list":
+            return RouteListSerializer
+
+        if self.action == "retrieve":
+            return RouteDetailSerializer
+
+        return RouteSerializer
 
 
 class TripViewSet(viewsets.ModelViewSet):
