@@ -14,3 +14,10 @@ class TrainSerializer(serializers.ModelSerializer):
             "places_in_cargo",
             "train_type",
         )
+
+
+class TrainDetailSerializer(TrainSerializer):
+    train_type = serializers.SlugRelatedField(
+        slug_field="name",
+        read_only=True
+    )

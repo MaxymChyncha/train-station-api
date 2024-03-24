@@ -39,6 +39,10 @@ class Train(models.Model):
         related_name="trains"
     )
 
+    @property
+    def capacity(self):
+        return self.cargo_num * self.places_in_cargo
+
     def __str__(self) -> str:
         return f"Train: {self.name}. Type: {self.train_type}"
 

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from station.models import Ticket
+from station.serializers.trip_serializers import TripListSerializer
 
 
 class TicketSerializer(serializers.ModelSerializer):
@@ -24,3 +25,7 @@ class TicketSerializer(serializers.ModelSerializer):
             ValidationError
         )
         return data
+
+
+class TicketListSerializer(TicketSerializer):
+    trip = TripListSerializer(many=False, read_only=True)
