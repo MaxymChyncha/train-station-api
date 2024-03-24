@@ -5,7 +5,10 @@ from rest_framework import mixins, viewsets
 
 from station.models import Crew, TrainType, Train, Station, Route, Trip, Order
 from station.serializers.crew_serializers import CrewSerializer
-from station.serializers.order_serializers import OrderSerializer
+from station.serializers.order_serializers import (
+    OrderSerializer,
+    OrderListSerializer
+)
 from station.serializers.route_serializers import (
     RouteSerializer,
     RouteListSerializer,
@@ -171,8 +174,21 @@ class OrderViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet
 ):
-    queryset = Order.objects.all()
+    queryset = Order.objects.prefetch_related(
+        "tickets__trip__route__source",
+        "tickets__trip__route__destination",
+        "tickets__trip__train"
+    )
     serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return OrderListSerializer
+
+        return OrderSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
