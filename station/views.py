@@ -4,6 +4,7 @@ from django.db.models import F, Count
 from rest_framework import mixins, viewsets
 
 from station.models import Crew, TrainType, Train, Station, Route, Trip, Order
+from station.paginations import OrderPagination
 from station.serializers.crew_serializers import CrewSerializer
 from station.serializers.order_serializers import (
     OrderSerializer,
@@ -180,6 +181,7 @@ class OrderViewSet(
         "tickets__trip__train"
     )
     serializer_class = OrderSerializer
+    pagination_class = OrderPagination
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
