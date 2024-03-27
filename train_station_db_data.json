@@ -1,0 +1,482 @@
+[
+  {
+    "model": "user.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$6uM28XWOFX6ewyloJzjqmt$L+ZhofPylneoaL2iZS4sZu4ZMUNb4oIevfAdzOMn/eE=",
+      "last_login": "2024-05-08T14:14:03Z",
+      "is_superuser": true,
+      "first_name": "Admin",
+      "last_name": "Main",
+      "email": "admin@admin.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-01-01T00:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "user.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$6uM28XWOFX6ewyloJzjqmt$L+ZhofPylneoaL2iZS4sZu4ZMUNb4oIevfAdzOMn/eE=",
+      "last_login": "2024-05-08T14:14:03Z",
+      "is_superuser": true,
+      "first_name": "Common",
+      "last_name": "User",
+      "email": "user@user.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-01T00:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "station.crew",
+    "pk": 1,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Smith",
+      "position": "train_driver"
+    }
+  },
+  {
+    "model": "station.crew",
+    "pk": 2,
+    "fields": {
+      "first_name": "Emily",
+      "last_name": "Davis",
+      "position": "ticket_inspector"
+    }
+  },
+  {
+    "model": "station.crew",
+    "pk": 3,
+    "fields": {
+      "first_name": "Michael",
+      "last_name": "Johnson",
+      "position": "train_dispatcher"
+    }
+  },
+  {
+    "model": "station.crew",
+    "pk": 4,
+    "fields": {
+      "first_name": "Sarah",
+      "last_name": "Brown",
+      "position": "security_guard"
+    }
+  },
+  {
+    "model": "station.crew",
+    "pk": 5,
+    "fields": {
+      "first_name": "David",
+      "last_name": "Wilson",
+      "position": "cleaning_staff"
+    }
+  },
+  {
+    "model": "station.traintype",
+    "pk": 1,
+    "fields": {
+      "name": "Express"
+    }
+  },
+  {
+    "model": "station.traintype",
+    "pk": 2,
+    "fields": {
+      "name": "Local"
+    }
+  },
+  {
+    "model": "station.traintype",
+    "pk": 3,
+    "fields": {
+      "name": "High-Speed"
+    }
+  },
+  {
+    "model": "station.traintype",
+    "pk": 4,
+    "fields": {
+      "name": "Freight"
+    }
+  },
+  {
+    "model": "station.traintype",
+    "pk": 5,
+    "fields": {
+      "name": "Subway"
+    }
+  },
+  {
+    "model": "station.train",
+    "pk": 1,
+    "fields": {
+      "name": "Express Cargo",
+      "cargo_num": 100,
+      "places_in_cargo": 50,
+      "train_type": 1
+    }
+  },
+  {
+    "model": "station.train",
+    "pk": 2,
+    "fields": {
+      "name": "Local Passenger",
+      "cargo_num": 50,
+      "places_in_cargo": 100,
+      "train_type": 2
+    }
+  },
+  {
+    "model": "station.train",
+    "pk": 3,
+    "fields": {
+      "name": "High-Speed Express",
+      "cargo_num": 75,
+      "places_in_cargo": 80,
+      "train_type": 3
+    }
+  },
+  {
+    "model": "station.train",
+    "pk": 4,
+    "fields": {
+      "name": "Freight Transporter",
+      "cargo_num": 200,
+      "places_in_cargo": 40,
+      "train_type": 4
+    }
+  },
+  {
+    "model": "station.train",
+    "pk": 5,
+    "fields": {
+      "name": "Subway Shuttle",
+      "cargo_num": 30,
+      "places_in_cargo": 200,
+      "train_type": 5
+    }
+  },
+  {
+    "model": "station.station",
+    "pk": 1,
+    "fields": {
+      "name": "Central Station",
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    }
+  },
+  {
+    "model": "station.station",
+    "pk": 2,
+    "fields": {
+      "name": "Union Station",
+      "latitude": 34.0522,
+      "longitude": -118.2437
+    }
+  },
+  {
+    "model": "station.station",
+    "pk": 3,
+    "fields": {
+      "name": "Grand Central Terminal",
+      "latitude": 40.7527,
+      "longitude": -73.9772
+    }
+  },
+  {
+    "model": "station.station",
+    "pk": 4,
+    "fields": {
+      "name": "Penn Station",
+      "latitude": 40.7506,
+      "longitude": -73.9935
+    }
+  },
+  {
+    "model": "station.station",
+    "pk": 5,
+    "fields": {
+      "name": "King's Cross Station",
+      "latitude": 51.5327,
+      "longitude": -0.1236
+    }
+  },
+  {
+    "model": "station.route",
+    "pk": 1,
+    "fields": {
+      "source": 1,
+      "destination": 2,
+      "distance": 200
+    }
+  },
+  {
+    "model": "station.route",
+    "pk": 2,
+    "fields": {
+      "source": 2,
+      "destination": 3,
+      "distance": 150
+    }
+  },
+  {
+    "model": "station.route",
+    "pk": 3,
+    "fields": {
+      "source": 3,
+      "destination": 4,
+      "distance": 180
+    }
+  },
+  {
+    "model": "station.route",
+    "pk": 4,
+    "fields": {
+      "source": 4,
+      "destination": 5,
+      "distance": 220
+    }
+  },
+  {
+    "model": "station.route",
+    "pk": 5,
+    "fields": {
+      "source": 5,
+      "destination": 1,
+      "distance": 250
+    }
+  },
+  {
+    "model": "station.trip",
+    "pk": 1,
+    "fields": {
+      "route": 1,
+      "train": 1,
+      "departure_time": "2024-04-01T08:00:00Z",
+      "arrival_time": "2024-04-01T12:00:00Z",
+      "crew": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "station.trip",
+    "pk": 2,
+    "fields": {
+      "route": 2,
+      "train": 2,
+      "departure_time": "2024-04-02T10:00:00Z",
+      "arrival_time": "2024-04-02T14:00:00Z",
+      "crew": [
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "station.trip",
+    "pk": 3,
+    "fields": {
+      "route": 3,
+      "train": 3,
+      "departure_time": "2024-04-03T12:00:00Z",
+      "arrival_time": "2024-04-03T16:00:00Z",
+      "crew": [
+        3,
+        4
+      ]
+    }
+  },
+  {
+    "model": "station.trip",
+    "pk": 4,
+    "fields": {
+      "route": 4,
+      "train": 4,
+      "departure_time": "2024-04-04T14:00:00Z",
+      "arrival_time": "2024-04-04T18:00:00Z",
+      "crew": [
+        4,
+        5
+      ]
+    }
+  },
+  {
+    "model": "station.trip",
+    "pk": 5,
+    "fields": {
+      "route": 5,
+      "train": 5,
+      "departure_time": "2024-04-05T16:00:00Z",
+      "arrival_time": "2024-04-05T20:00:00Z",
+      "crew": [
+        5,
+        1
+      ]
+    }
+  },
+  {
+    "model": "station.order",
+    "pk": 1,
+    "fields": {
+      "created_at": "2024-04-01T08:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "station.order",
+    "pk": 2,
+    "fields": {
+      "created_at": "2024-04-02T10:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "station.order",
+    "pk": 3,
+    "fields": {
+      "created_at": "2024-04-03T12:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "station.order",
+    "pk": 4,
+    "fields": {
+      "created_at": "2024-04-04T14:00:00Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "station.order",
+    "pk": 5,
+    "fields": {
+      "created_at": "2024-04-05T16:00:00Z",
+      "user": 2
+    }
+  },
+  {
+    "model": "station.order",
+    "pk": 6,
+    "fields": {
+      "created_at": "2024-04-06T18:00:00Z",
+      "user": 2
+    }
+  },
+  {
+    "model": "station.order",
+    "pk": 7,
+    "fields": {
+      "created_at": "2024-04-07T20:00:00Z",
+      "user": 2
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 1,
+    "fields": {
+      "cargo": 1,
+      "seat": 1,
+      "trip": 1,
+      "order": 1
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 2,
+    "fields": {
+      "cargo": 2,
+      "seat": 2,
+      "trip": 2,
+      "order": 2
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 3,
+    "fields": {
+      "cargo": 3,
+      "seat": 3,
+      "trip": 3,
+      "order": 3
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 4,
+    "fields": {
+      "cargo": 4,
+      "seat": 4,
+      "trip": 4,
+      "order": 4
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 5,
+    "fields": {
+      "cargo": 5,
+      "seat": 5,
+      "trip": 5,
+      "order": 5
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 6,
+    "fields": {
+      "cargo": 6,
+      "seat": 6,
+      "trip": 1,
+      "order": 6
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 7,
+    "fields": {
+      "cargo": 7,
+      "seat": 7,
+      "trip": 2,
+      "order": 7
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 8,
+    "fields": {
+      "cargo": 8,
+      "seat": 8,
+      "trip": 3,
+      "order": 1
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 9,
+    "fields": {
+      "cargo": 9,
+      "seat": 9,
+      "trip": 4,
+      "order": 2
+    }
+  },
+  {
+    "model": "station.ticket",
+    "pk": 10,
+    "fields": {
+      "cargo": 10,
+      "seat": 10,
+      "trip": 5,
+      "order": 3
+    }
+  }
+]
