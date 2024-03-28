@@ -1,4 +1,5 @@
 import datetime
+from operator import itemgetter
 
 from django.db.models import F, Count
 from django.test import TestCase
@@ -21,9 +22,11 @@ from station.utils.samples import (
     sample_station
 )
 
-TRIP_ID = 1
 TRIP_URL = reverse("station:trip-list")
-TRIP_DETAIL_URL = reverse("station:trip-detail", kwargs={"pk": TRIP_ID})
+
+
+def detail_url(trip_id):
+    return reverse("station:trip-detail", args=[trip_id])
 
 
 class UnauthenticatedTripApiTest(TestCase):
@@ -65,17 +68,16 @@ class AuthenticatedTripApiTest(TestCase):
         )
 
     def test_list_trip(self):
-        sample_trip()
-
         res = self.client.get(TRIP_URL)
 
         serializer = TripListSerializer(self.trips, many=True)
+        serializer_data = sorted(serializer.data, key=itemgetter("id"))
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data.get("results"), serializer.data)
+        self.assertEqual(res.data.get("results"), serializer_data)
 
     def test_retrieve_trip(self):
-        res = self.client.get(TRIP_DETAIL_URL)
+        res = self.client.get(detail_url(self.trip.id))
 
         serializer = TripDetailSerializer(self.trip)
 
@@ -104,12 +106,12 @@ class AuthenticatedTripApiTest(TestCase):
                 datetime.datetime.now() + datetime.timedelta(days=2)
             )
         }
-        res = self.client.patch(TRIP_DETAIL_URL, data)
+        res = self.client.patch(detail_url(self.trip.id), data)
 
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_delete_trip_forbidden(self):
-        res = self.client.delete(TRIP_DETAIL_URL)
+        res = self.client.delete(detail_url(self.trip.id))
 
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -212,11 +214,11 @@ class AdminTripApiTest(TestCase):
             )
         }
 
-        res = self.client.patch(TRIP_DETAIL_URL, data)
+        res = self.client.patch(detail_url(self.trip.id), data)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_delete_trip(self):
-        res = self.client.delete(TRIP_DETAIL_URL)
+        res = self.client.delete(detail_url(self.trip.id))
 
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)

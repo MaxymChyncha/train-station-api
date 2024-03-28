@@ -12,9 +12,11 @@ from station.utils.samples import (
     sample_train_type
 )
 
-TRAIN_ID = 1
 TRAIN_URL = reverse("station:train-list")
-TRAIN_DETAIL_URL = reverse("station:train-detail", kwargs={"pk": TRAIN_ID})
+
+
+def detail_url(train_id):
+    return reverse("station:train-detail", args=[train_id])
 
 
 class UnauthenticatedTrainApiTest(TestCase):
@@ -47,7 +49,7 @@ class AuthenticatedTrainApiTest(TestCase):
         self.assertEqual(res.data.get("results"), serializer.data)
 
     def test_retrieve_train(self):
-        res = self.client.get(TRAIN_DETAIL_URL)
+        res = self.client.get(detail_url(self.train.id))
 
         serializer = TrainSerializer(self.train)
 
@@ -67,7 +69,7 @@ class AuthenticatedTrainApiTest(TestCase):
 
     def test_update_train_forbidden(self):
         data = {"name": "new_train"}
-        res = self.client.patch(TRAIN_DETAIL_URL, data)
+        res = self.client.patch(detail_url(self.train.id), data)
 
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -93,11 +95,11 @@ class AdminTrainApiTest(TestCase):
 
     def test_update_train(self):
         data = {"name": "new_train"}
-        res = self.client.patch(TRAIN_DETAIL_URL, data)
+        res = self.client.patch(detail_url(self.train.id), data)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_delete_train_not_allowed(self):
-        res = self.client.delete(TRAIN_DETAIL_URL)
+        res = self.client.delete(detail_url(self.train.id))
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)

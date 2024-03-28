@@ -11,11 +11,11 @@ from station.utils.samples import (
     sample_station
 )
 
-STATION_ID = 1
 STATION_URL = reverse("station:station-list")
-STATION_DETAIL_URL = reverse(
-    "station:station-detail", kwargs={"pk": STATION_ID}
-)
+
+
+def detail_url(station_id):
+    return reverse("station:station-detail", args=[station_id])
 
 
 class UnauthenticatedStationApiTest(TestCase):
@@ -48,7 +48,7 @@ class AuthenticatedTrainApiTest(TestCase):
         self.assertEqual(res.data.get("results"), serializer.data)
 
     def test_retrieve_station(self):
-        res = self.client.get(STATION_DETAIL_URL)
+        res = self.client.get(detail_url(self.station.id))
 
         serializer = StationSerializer(self.station)
 
@@ -87,11 +87,11 @@ class AdminTrainApiTest(TestCase):
     def test_update_station_not_allowed(self):
         data = {"name": "new_station_name"}
 
-        res = self.client.put(STATION_DETAIL_URL, data)
+        res = self.client.put(detail_url(self.station.id), data)
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_delete_station_not_allowed(self):
-        res = self.client.delete(STATION_DETAIL_URL)
+        res = self.client.delete(detail_url(self.station.id))
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
