@@ -15,9 +15,11 @@ from station.utils.samples import (
     sample_route
 )
 
-ROUTE_ID = 1
 ROUTE_URL = reverse("station:route-list")
-ROUTE_DETAIL_URL = reverse("station:route-detail", kwargs={"pk": ROUTE_ID})
+
+
+def detail_url(route_id):
+    return reverse("station:route-detail", args=[route_id])
 
 
 class UnauthenticatedRouteApiTest(TestCase):
@@ -50,7 +52,7 @@ class AuthenticatedRouteApiTest(TestCase):
         self.assertEqual(res.data.get("results"), serializer.data)
 
     def test_retrieve_route(self):
-        res = self.client.get(ROUTE_DETAIL_URL)
+        res = self.client.get(detail_url(self.route.id))
 
         serializer = RouteDetailSerializer(self.route)
 
@@ -134,11 +136,11 @@ class AdminRouteApiTest(TestCase):
     def test_update_route_not_allowed(self):
         data = {"distance": 20}
 
-        res = self.client.put(ROUTE_DETAIL_URL, data)
+        res = self.client.put(detail_url(self.route.id), data)
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_delete_route_not_allowed(self):
-        res = self.client.delete(ROUTE_DETAIL_URL)
+        res = self.client.delete(detail_url(self.route.id))
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
