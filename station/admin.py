@@ -13,9 +13,46 @@ from station.models import (
 
 admin.site.register(Crew)
 admin.site.register(TrainType)
-admin.site.register(Train)
 admin.site.register(Station)
-admin.site.register(Route)
-admin.site.register(Trip)
-admin.site.register(Order)
-admin.site.register(Ticket)
+
+
+class TicketInLine(admin.TabularInline):
+    model = Ticket
+    extra = 1
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    inlines = (TicketInLine,)
+
+
+@admin.register(Train)
+class TrainAdmin(admin.ModelAdmin):
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.select_related("train_type")
+
+        return queryset
+
+
+@admin.register(Route)
+class RouteAdmin(admin.ModelAdmin):
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.select_related("source", "destination")
+        return queryset
+
+
+@admin.register(Trip)
+class TripAdmin(admin.ModelAdmin):
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.select_related(
+            "route__source",
+            "route__destination",
+            "train"
+        )
+        return queryset
