@@ -89,7 +89,7 @@ class StationViewSet(
                 type=OpenApiTypes.STR,
                 description="Filter by source",
                 examples=[
-                    OpenApiExample(name="Example 1", value="#")  # add value
+                    OpenApiExample(name="Example 1", value="Central Station")
                 ]
             ),
             OpenApiParameter(
@@ -97,7 +97,7 @@ class StationViewSet(
                 type=OpenApiTypes.STR,
                 description="Filter by destination",
                 examples=[
-                    OpenApiExample(name="Example 1", value="#")  # add value
+                    OpenApiExample(name="Example 1", value="Union Station")
                 ]
             ),
         ]
@@ -151,7 +151,7 @@ class RouteViewSet(
                 type=OpenApiTypes.STR,
                 description="Filter by from location (source)",
                 examples=[
-                    OpenApiExample(name="Example 1", value="#")  # add value
+                    OpenApiExample(name="Example 1", value="Central Station")
                 ]
             ),
             OpenApiParameter(
@@ -159,7 +159,7 @@ class RouteViewSet(
                 type=OpenApiTypes.STR,
                 description="Filter by to location (destination)",
                 examples=[
-                    OpenApiExample(name="Example 1", value="#")  # add value
+                    OpenApiExample(name="Example 1", value="Union Station")
                 ]
             ),
             OpenApiParameter(
@@ -167,7 +167,7 @@ class RouteViewSet(
                 type=OpenApiTypes.DATE,
                 description="Filter by to departure date",
                 examples=[
-                    OpenApiExample(name="Example 1", value="#")  # add value
+                    OpenApiExample(name="Example 1", value="2024-04-01")
                 ]
             ),
             OpenApiParameter(
@@ -175,7 +175,7 @@ class RouteViewSet(
                 type=OpenApiTypes.DATE,
                 description="Filter by to arrival date",
                 examples=[
-                    OpenApiExample(name="Example 1", value="#")  # add value
+                    OpenApiExample(name="Example 1", value="2024-04-02")
                 ]
             ),
         ]
