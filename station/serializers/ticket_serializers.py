@@ -35,4 +35,4 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(TicketSerializer):
-    trip = TripOrderSerializer(many=False, read_only=True)
+    trip = TripOrderSerializer(read_only=True)

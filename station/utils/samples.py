@@ -125,7 +125,6 @@ def sample_trip(**params):
 
 
 def sample_order(**params):
-    # user = params.get("user", sample_user())
     if not params.get("user"):
         user = sample_user()
     else:
@@ -139,7 +138,6 @@ def sample_order(**params):
 
 def sample_ticket(**params):
     trip = params.get("trip", sample_trip())
-    # order = params.get("order", sample_order())
     if not params.get("order"):
         order = sample_order()
     else:

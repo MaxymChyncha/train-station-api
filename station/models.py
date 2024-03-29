@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 
 
 class Crew(models.Model):
+
     class CrewPosition(models.TextChoices):
         TRAIN_DRIVER = "train_driver", _("Train driver")
         TICKET_INSPECTOR = "ticket_inspector", _("Ticket inspector")
@@ -44,7 +45,7 @@ class Train(models.Model):
     cargo_num = models.PositiveIntegerField()
     places_in_cargo = models.PositiveIntegerField()
     train_type = models.ForeignKey(
-        to=TrainType,
+        TrainType,
         on_delete=models.PROTECT,
         related_name="trains"
     )
@@ -68,12 +69,12 @@ class Station(models.Model):
 
 class Route(models.Model):
     source = models.ForeignKey(
-        to=Station,
+        Station,
         on_delete=models.CASCADE,
         related_name="source_routes"
     )
     destination = models.ForeignKey(
-        to=Station,
+        Station,
         on_delete=models.CASCADE,
         related_name="destination_routes"
     )
@@ -94,19 +95,19 @@ class Route(models.Model):
 
 class Trip(models.Model):
     route = models.ForeignKey(
-        to=Route,
+        Route,
         on_delete=models.CASCADE,
         related_name="trips"
     )
     train = models.ForeignKey(
-        to=Train,
+        Train,
         on_delete=models.CASCADE,
         related_name="trips"
     )
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
     crew = models.ManyToManyField(
-        to=Crew,
+        Crew,
         related_name="trips"
     )
 
@@ -117,7 +118,7 @@ class Trip(models.Model):
 class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(
-        to=get_user_model(),
+        get_user_model(),
         on_delete=models.CASCADE,
         related_name="orders"
     )
@@ -133,12 +134,12 @@ class Ticket(models.Model):
     cargo = models.PositiveIntegerField()
     seat = models.PositiveIntegerField()
     trip = models.ForeignKey(
-        to=Trip,
+        Trip,
         on_delete=models.CASCADE,
         related_name="tickets"
     )
     order = models.ForeignKey(
-        to=Order,
+        Order,
         on_delete=models.CASCADE,
         related_name="tickets"
     )
