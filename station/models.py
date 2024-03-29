@@ -80,7 +80,12 @@ class Route(models.Model):
     distance = models.PositiveIntegerField()
 
     class Meta:
-        unique_together = ("source", "destination")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["source", "destination"],
+                name="unique_source_destination"
+            )
+        ]
         ordering = ["source"]
 
     def __str__(self) -> str:
@@ -139,7 +144,12 @@ class Ticket(models.Model):
     )
 
     class Meta:
-        unique_together = ("trip", "cargo", "seat")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["trip", "cargo", "seat"],
+                name="unique_trip_cargo_seat"
+            )
+        ]
         ordering = ["cargo", "seat"]
 
     @staticmethod
