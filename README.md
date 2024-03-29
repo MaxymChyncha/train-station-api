@@ -52,3 +52,7 @@ and password.
 Use the obtained token in the authorization header for accessing protected endpoints 
 (```Authoriazation: Bearer <Your access token>```).
 Be free to explore various endpoints for different functionalities provided by the API.
+
+## Database Structure
+
+![Demo](demo.jpg)
