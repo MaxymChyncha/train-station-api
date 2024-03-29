@@ -101,7 +101,7 @@ class RouteViewSet(
         if self.action == "retrieve":
             return RouteDetailSerializer
 
-        return RouteSerializer
+        return self.serializer_class
 
 
 @extend_schema_view(
@@ -176,7 +176,7 @@ class TripViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return TripDetailSerializer
 
-        return TripSerializer
+        return self.serializer_class
 
 
 class OrderViewSet(
@@ -200,7 +200,7 @@ class OrderViewSet(
         if self.action == "list":
             return OrderListSerializer
 
-        return OrderSerializer
+        return self.serializer_class
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
