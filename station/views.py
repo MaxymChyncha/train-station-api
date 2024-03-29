@@ -7,7 +7,6 @@ from rest_framework.permissions import IsAuthenticated
 
 from station.models import Crew, TrainType, Train, Station, Route, Trip, Order
 from station.paginations import OrderPagination
-from station.permissions import IsAdminOrIfAuthenticatedReadOnly
 from station.serializers.crew_serializers import CrewSerializer
 from station.serializers.order_serializers import (
     OrderSerializer,
@@ -36,7 +35,6 @@ class CrewViewSet(
 ):
     queryset = Crew.objects.all()
     serializer_class = CrewSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class TrainTypeViewSet(
@@ -46,7 +44,6 @@ class TrainTypeViewSet(
 ):
     queryset = TrainType.objects.all()
     serializer_class = TrainTypeSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class TrainViewSet(
@@ -58,7 +55,6 @@ class TrainViewSet(
 ):
     queryset = Train.objects.all()
     serializer_class = TrainSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class StationViewSet(
@@ -69,7 +65,6 @@ class StationViewSet(
 ):
     queryset = Station.objects.all()
     serializer_class = StationSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 @extend_schema_view(
@@ -83,7 +78,6 @@ class RouteViewSet(
 ):
     queryset = Route.objects.select_related("source", "destination")
     serializer_class = RouteSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_queryset(self):
         queryset = self.queryset
@@ -116,7 +110,6 @@ class RouteViewSet(
 class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.all()
     serializer_class = TripSerializer
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_queryset(self):
         queryset = super().get_queryset()
