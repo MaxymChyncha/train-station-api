@@ -32,7 +32,6 @@ class TrainAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         queryset = queryset.select_related("train_type")
-
         return queryset
 
 
