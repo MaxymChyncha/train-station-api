@@ -33,7 +33,6 @@ class TrainType(models.Model):
     name = models.CharField(max_length=63)
 
     class Meta:
-        verbose_name = "Train Type"
         verbose_name_plural = "Train Types"
 
     def __str__(self) -> str:
